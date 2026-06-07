@@ -88,7 +88,18 @@ def image(filename):
 
 @app.route("/health")
 def health():
-    return {"backend": storage.backend_name(), "remote": storage.REMOTE}
+    return {
+        "backend": storage.backend_name(),
+        "remote": storage.REMOTE,
+        "vars_present": {
+            "R2_BUCKET": bool(os.environ.get("R2_BUCKET")),
+            "R2_ENDPOINT": bool(os.environ.get("R2_ENDPOINT")),
+            "R2_ACCESS_KEY_ID": bool(os.environ.get("R2_ACCESS_KEY_ID")),
+            "R2_SECRET_ACCESS_KEY": bool(os.environ.get("R2_SECRET_ACCESS_KEY")),
+            "R2_REGION": bool(os.environ.get("R2_REGION")),
+        },
+        "endpoint_host": (os.environ.get("R2_ENDPOINT") or "").split("//")[-1].split("/")[0],
+    }
 
 
 @app.route("/login", methods=["GET", "POST"])
