@@ -16,10 +16,13 @@ IMAGE_DIR = os.path.join(BASE_DIR, "uploads", "images")
 DB_FILE = os.path.join(BASE_DIR, "software.json")
 DB_KEY = "software.json"
 
+# Works with any S3-compatible store (Cloudflare R2, Supabase, AWS S3...).
+# Env var names keep the R2_ prefix for backwards compatibility.
 R2_BUCKET = os.environ.get("R2_BUCKET")
 R2_ENDPOINT = os.environ.get("R2_ENDPOINT")
 R2_ACCESS_KEY = os.environ.get("R2_ACCESS_KEY_ID")
 R2_SECRET_KEY = os.environ.get("R2_SECRET_ACCESS_KEY")
+R2_REGION = os.environ.get("R2_REGION", "auto")  # Supabase needs a real region
 
 REMOTE = all([R2_BUCKET, R2_ENDPOINT, R2_ACCESS_KEY, R2_SECRET_KEY])
 
@@ -32,8 +35,11 @@ if REMOTE:
         endpoint_url=R2_ENDPOINT,
         aws_access_key_id=R2_ACCESS_KEY,
         aws_secret_access_key=R2_SECRET_KEY,
-        config=Config(signature_version="s3v4"),
-        region_name="auto",
+        config=Config(
+            signature_version="s3v4",
+            s3={"addressing_style": "path"},  # required by Supabase, fine for R2
+        ),
+        region_name=R2_REGION,
     )
 else:
     os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -41,7 +47,13 @@ else:
 
 
 def backend_name():
-    return "Cloudflare R2" if REMOTE else "local disk"
+    if not REMOTE:
+        return "local disk"
+    if "supabase" in (R2_ENDPOINT or ""):
+        return "Supabase Storage"
+    if "r2.cloudflarestorage" in (R2_ENDPOINT or ""):
+        return "Cloudflare R2"
+    return "S3-compatible storage"
 
 
 def stream_size(fileobj):

@@ -20,3 +20,5 @@ services:
         sync: false
       - key: R2_SECRET_ACCESS_KEY
         sync: false
+      - key: R2_REGION
+        sync: false
