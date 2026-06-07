@@ -86,6 +86,11 @@ def image(filename):
     return send_from_directory(directory, name)
 
 
+@app.route("/health")
+def health():
+    return {"backend": storage.backend_name(), "remote": storage.REMOTE}
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
