@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Admin Login - Hadex Factory{% endblock %}
+{% block content %}
+  <form class="box" method="post">
+    <h2 style="text-align:center;margin-bottom:8px;">Admin Login</h2>
+    <p style="text-align:center;color:var(--muted);font-size:13px;">Enter your password to upload software.</p>
+    <label>Password</label>
+    <input type="password" name="password" autofocus required>
+    <button class="btn" style="margin-top:20px;" type="submit">Log In</button>
+  </form>
+{% endblock %}

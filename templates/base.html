@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Hadex Factory{% endblock %}</title>
+  <style>
+    :root{
+      --bg:#181a20; --panel:#22252e; --panel2:#2a2e39;
+      --accent:#00aaff; --green:#3cb45a; --danger:#dc4646;
+      --fg:#e8eaed; --muted:#8a8f99;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--fg);font-family:'Segoe UI',system-ui,sans-serif;line-height:1.5;}
+    a{color:var(--accent);text-decoration:none;}
+    header{background:var(--panel);padding:18px 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #000;}
+    .logo{font-size:22px;font-weight:800;color:var(--accent);letter-spacing:1px;}
+    .logo span{color:var(--fg);font-weight:400;font-size:13px;margin-left:8px;}
+    nav a{margin-left:18px;font-size:14px;color:var(--muted);}
+    nav a:hover{color:var(--fg);}
+    .wrap{max-width:1000px;margin:0 auto;padding:32px 20px;}
+    .flash{background:var(--accent);color:#001b2e;padding:12px 18px;border-radius:8px;margin-bottom:18px;font-weight:600;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;}
+    .card{background:var(--panel);border:1px solid #2f333d;border-radius:12px;padding:20px;transition:.15s;}
+    .card:hover{border-color:var(--accent);transform:translateY(-2px);}
+    .card h3{font-size:17px;margin-bottom:4px;}
+    .ver{color:var(--accent);font-size:12px;font-weight:600;}
+    .desc{color:var(--muted);font-size:13px;margin:10px 0;min-height:38px;}
+    .meta{font-size:11px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:14px;}
+    .btn{display:inline-block;background:var(--accent);color:#001b2e;font-weight:700;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;font-size:14px;width:100%;text-align:center;}
+    .btn:hover{opacity:.9;}
+    .btn.green{background:var(--green);color:#fff;}
+    .btn.danger{background:var(--danger);color:#fff;width:auto;padding:8px 14px;}
+    .empty{text-align:center;color:var(--muted);padding:60px 0;}
+    form.box{background:var(--panel);padding:26px;border-radius:12px;max-width:480px;margin:0 auto;}
+    label{display:block;font-size:13px;color:var(--muted);margin:14px 0 6px;}
+    input,textarea{width:100%;background:var(--panel2);border:1px solid #3a3f4b;border-radius:8px;color:var(--fg);padding:11px;font-size:14px;font-family:inherit;}
+    input:focus,textarea:focus{outline:none;border-color:var(--accent);}
+    table{width:100%;border-collapse:collapse;margin-top:20px;}
+    th,td{text-align:left;padding:10px;border-bottom:1px solid #2f333d;font-size:13px;}
+    th{color:var(--muted);font-weight:600;}
+    .shot{width:100%;height:150px;object-fit:cover;border-radius:8px;margin-bottom:14px;background:var(--panel2);}
+    .shot.placeholder{display:flex;align-items:center;justify-content:center;font-size:54px;}
+    #search{width:100%;background:var(--panel2);border:1px solid #3a3f4b;border-radius:8px;color:var(--fg);padding:12px 14px;font-size:15px;}
+    #search:focus{outline:none;border-color:var(--accent);}
+    footer{text-align:center;color:#555;font-size:12px;padding:30px;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">HADEX FACTORY <span>software hub</span></div>
+    <nav>
+      <a href="{{ url_for('index') }}">Home</a>
+      {% if session.logged_in %}
+        <a href="{{ url_for('admin') }}">Upload</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Admin</a>
+      {% endif %}
+    </nav>
+  </header>
+  <div class="wrap">
+    {% with messages = get_flashed_messages() %}
+      {% for m in messages %}<div class="flash">{{ m }}</div>{% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </div>
+  <footer>Hadex Factory &copy; 2026</footer>
+</body>
+</html>

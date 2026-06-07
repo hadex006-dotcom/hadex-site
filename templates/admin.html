@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Upload - Hadex Factory{% endblock %}
+{% block content %}
+  <h2 style="margin-bottom:20px;">Upload Software</h2>
+
+  <form class="box" method="post" enctype="multipart/form-data" style="margin:0 0 30px 0;">
+    <label>Software name</label>
+    <input type="text" name="name" placeholder="Hadex Factory">
+    <label>Version</label>
+    <input type="text" name="version" placeholder="1.0">
+    <label>Description</label>
+    <textarea name="description" rows="3" placeholder="What does it do?"></textarea>
+    <label>Screenshot / icon (optional)</label>
+    <input type="file" name="image" accept="image/*">
+    <label>File</label>
+    <input type="file" name="file" required>
+    <button class="btn green" style="margin-top:20px;" type="submit">⬆ Upload</button>
+  </form>
+
+  <h3 style="margin-bottom:6px;">Your uploads</h3>
+  {% if items %}
+    <table>
+      <tr><th>Name</th><th>Version</th><th>Size</th><th>Downloads</th><th>Date</th><th></th></tr>
+      {% for it in items %}
+        <tr>
+          <td>{{ it.name }}</td>
+          <td>{{ it.version or "-" }}</td>
+          <td>{{ it.size }}</td>
+          <td>{{ it.downloads }}</td>
+          <td>{{ it.uploaded }}</td>
+          <td>
+            <form method="post" action="{{ url_for('delete', file_id=it.id) }}" onsubmit="return confirm('Delete {{ it.name }}?');">
+              <button class="btn danger" type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p style="color:var(--muted);">Nothing uploaded yet.</p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2 style="margin-bottom:6px;">Downloads</h2>
+  <p style="color:var(--muted);font-size:14px;margin-bottom:18px;">Free software by Hadex. Click to download.</p>
+
+  {% if items %}
+    <input type="text" id="search" placeholder="🔍 Search software..."
+           style="margin-bottom:24px;" onkeyup="filterCards()">
+    <div class="grid" id="cards">
+      {% for it in items %}
+        <div class="card" data-name="{{ (it.name ~ ' ' ~ it.description)|lower }}">
+          {% if it.image %}
+            <img class="shot" src="{{ url_for('image', filename=it.image) }}" alt="{{ it.name }}">
+          {% else %}
+            <div class="shot placeholder">📦</div>
+          {% endif %}
+          <h3>{{ it.name }}</h3>
+          {% if it.version %}<div class="ver">v{{ it.version }}</div>{% endif %}
+          <div class="desc">{{ it.description or "No description." }}</div>
+          <div class="meta">
+            <span>{{ it.size }}</span>
+            <span>{{ it.downloads }} downloads</span>
+          </div>
+          <a class="btn" href="{{ url_for('download', file_id=it.id) }}">⬇ Download</a>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="empty" id="noresults" style="display:none;">No software matches your search.</div>
+    <script>
+      function filterCards(){
+        var q = document.getElementById('search').value.toLowerCase().trim();
+        var cards = document.querySelectorAll('#cards .card');
+        var shown = 0;
+        cards.forEach(function(c){
+          var match = c.getAttribute('data-name').indexOf(q) !== -1;
+          c.style.display = match ? '' : 'none';
+          if (match) shown++;
+        });
+        document.getElementById('noresults').style.display = shown ? 'none' : 'block';
+      }
+    </script>
+  {% else %}
+    <div class="empty">No software uploaded yet. Check back soon!</div>
+  {% endif %}
+{% endblock %}
