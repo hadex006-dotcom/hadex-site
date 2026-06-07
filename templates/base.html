@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Hadex Factory{% endblock %}</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='64' y2='64'%3E%3Cstop stop-color='%2300aaff'/%3E%3Cstop offset='1' stop-color='%237d5cff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath d='M35 14 L20 36 H31 L29 50 L44 28 H33 L35 14 Z' fill='white'/%3E%3C/svg%3E">
   <style>
     :root{
       --bg:#181a20; --panel:#22252e; --panel2:#2a2e39;
@@ -14,8 +15,11 @@
     body{background:var(--bg);color:var(--fg);font-family:'Segoe UI',system-ui,sans-serif;line-height:1.5;}
     a{color:var(--accent);text-decoration:none;}
     header{background:var(--panel);padding:18px 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #000;position:sticky;top:0;z-index:10;backdrop-filter:blur(8px);}
-    .logo{font-size:22px;font-weight:800;letter-spacing:1px;background:linear-gradient(90deg,#00aaff,#7d5cff);-webkit-background-clip:text;background-clip:text;color:transparent;}
-    .logo span{color:var(--muted);font-weight:400;font-size:13px;margin-left:8px;-webkit-text-fill-color:var(--muted);}
+    .logo{display:flex;align-items:center;gap:11px;}
+    .logo-mark{flex-shrink:0;filter:drop-shadow(0 2px 6px rgba(0,170,255,.35));transition:transform .2s;}
+    .logo:hover .logo-mark{transform:rotate(-8deg) scale(1.06);}
+    .logo-text{font-size:21px;font-weight:800;letter-spacing:1px;line-height:1;background:linear-gradient(90deg,#00aaff,#7d5cff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .logo-text small{display:block;color:var(--muted);font-weight:400;font-size:11px;letter-spacing:.5px;margin-top:3px;-webkit-text-fill-color:var(--muted);}
     .hero{background:linear-gradient(135deg,rgba(0,170,255,.12),rgba(125,92,255,.10));border:1px solid #2f333d;border-radius:16px;padding:38px 30px;margin-bottom:28px;text-align:center;}
     .hero h1{font-size:30px;margin-bottom:8px;background:linear-gradient(90deg,#00aaff,#7d5cff);-webkit-background-clip:text;background-clip:text;color:transparent;}
     .hero p{color:var(--muted);font-size:15px;}
@@ -56,7 +60,18 @@
 </head>
 <body>
   <header>
-    <div class="logo">HADEX FACTORY <span>software hub</span></div>
+    <a href="{{ url_for('index') }}" class="logo">
+      <svg class="logo-mark" width="34" height="34" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="hdxg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00aaff"/><stop offset="1" stop-color="#7d5cff"/>
+          </linearGradient>
+        </defs>
+        <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#hdxg)"/>
+        <path d="M35 14 L20 36 H31 L29 50 L44 28 H33 L35 14 Z" fill="#fff"/>
+      </svg>
+      <span class="logo-text">HADEX FACTORY <small>software hub</small></span>
+    </a>
     <nav>
       <a href="{{ url_for('index') }}">Home</a>
       {% if session.logged_in %}
