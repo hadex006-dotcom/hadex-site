@@ -1,5 +1,5 @@
 uploads/
-software.json
+/software.json
 __pycache__/
 *.pyc
 venv/
