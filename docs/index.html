@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hadex Factory — software hub</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='64' y2='64'%3E%3Cstop stop-color='%2300aaff'/%3E%3Cstop offset='1' stop-color='%237d5cff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath d='M35 14 L20 36 H31 L29 50 L44 28 H33 L35 14 Z' fill='white'/%3E%3C/svg%3E">
+  <style>
+    :root{
+      --bg:#181a20; --panel:#22252e; --panel2:#2a2e39;
+      --accent:#00aaff; --fg:#e8eaed; --muted:#8a8f99;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--fg);font-family:'Segoe UI',system-ui,sans-serif;line-height:1.5;}
+    a{color:var(--accent);text-decoration:none;}
+    header{background:var(--panel);padding:18px 28px;display:flex;align-items:center;gap:11px;border-bottom:1px solid #000;position:sticky;top:0;z-index:10;}
+    .logo-mark{flex-shrink:0;filter:drop-shadow(0 2px 6px rgba(0,170,255,.35));}
+    .logo-text{font-size:21px;font-weight:800;letter-spacing:1px;line-height:1;background:linear-gradient(90deg,#00aaff,#7d5cff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .logo-text small{display:block;color:var(--muted);font-weight:400;font-size:11px;letter-spacing:.5px;margin-top:3px;-webkit-text-fill-color:var(--muted);}
+    .wrap{max-width:1000px;margin:0 auto;padding:32px 20px;}
+    .hero{background:linear-gradient(135deg,rgba(0,170,255,.12),rgba(125,92,255,.10));border:1px solid #2f333d;border-radius:16px;padding:38px 30px;margin-bottom:28px;text-align:center;}
+    .hero h1{font-size:30px;margin-bottom:8px;background:linear-gradient(90deg,#00aaff,#7d5cff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .hero p{color:var(--muted);font-size:15px;}
+    .stats{display:flex;gap:14px;justify-content:center;margin-top:20px;flex-wrap:wrap;}
+    .stat{background:var(--panel2);border:1px solid #3a3f4b;border-radius:10px;padding:12px 22px;min-width:110px;}
+    .stat b{display:block;font-size:22px;color:var(--accent);}
+    .stat small{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;}
+    #search{width:100%;background:var(--panel2);border:1px solid #3a3f4b;border-radius:8px;color:var(--fg);padding:12px 14px;font-size:15px;margin-bottom:24px;}
+    #search:focus{outline:none;border-color:var(--accent);}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;}
+    .card{background:var(--panel);border:1px solid #2f333d;border-radius:12px;padding:20px;transition:.2s;animation:fadeUp .4s ease both;}
+    .card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,170,255,.12);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+    .shot{width:100%;height:150px;object-fit:cover;border-radius:8px;margin-bottom:14px;background:var(--panel2);}
+    .shot.placeholder{display:flex;align-items:center;justify-content:center;font-size:54px;}
+    .card h3{font-size:17px;margin-bottom:4px;}
+    .ver{color:var(--accent);font-size:12px;font-weight:600;}
+    .desc{color:var(--muted);font-size:13px;margin:10px 0;min-height:38px;}
+    .meta{font-size:11px;color:var(--muted);margin-bottom:14px;}
+    .btn{display:block;background:var(--accent);color:#001b2e;font-weight:700;padding:10px 16px;border-radius:8px;font-size:14px;text-align:center;}
+    .btn:hover{opacity:.9;}
+    .empty{text-align:center;color:var(--muted);padding:60px 0;}
+    footer{text-align:center;color:#555;font-size:12px;padding:30px;}
+  </style>
+</head>
+<body>
+  <header>
+    <svg class="logo-mark" width="34" height="34" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <defs><linearGradient id="hdxg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#00aaff"/><stop offset="1" stop-color="#7d5cff"/></linearGradient></defs>
+      <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#hdxg)"/>
+      <path d="M35 14 L20 36 H31 L29 50 L44 28 H33 L35 14 Z" fill="#fff"/>
+    </svg>
+    <span class="logo-text">HADEX FACTORY <small>software hub</small></span>
+  </header>
+
+  <div class="wrap">
+    <div class="hero">
+      <h1>⚡ Hadex Factory</h1>
+      <p>Free software, built by Hadex. Download what you need — no signup, no ads.</p>
+      <div class="stats">
+        <div class="stat"><b id="count">0</b><small>Programs</small></div>
+      </div>
+    </div>
+
+    <input type="text" id="search" placeholder="🔍 Search software..." onkeyup="filterCards()">
+    <div class="grid" id="cards"></div>
+    <div class="empty" id="empty">Loading…</div>
+  </div>
+
+  <footer>Hadex Factory &copy; 2026 · hosted on GitHub Pages</footer>
+
+  <script>
+    let ALL = [];
+
+    function human(it){ return it.size || ""; }
+
+    function render(list){
+      const grid = document.getElementById('cards');
+      const empty = document.getElementById('empty');
+      grid.innerHTML = "";
+      if(!list.length){
+        empty.style.display = "block";
+        empty.textContent = ALL.length ? "No software matches your search." : "No software uploaded yet. Check back soon!";
+        return;
+      }
+      empty.style.display = "none";
+      list.forEach(it => {
+        const card = document.createElement('div');
+        card.className = "card";
+        const shot = it.image
+          ? `<img class="shot" src="${it.image}" alt="${it.name}">`
+          : `<div class="shot placeholder">📦</div>`;
+        card.innerHTML = `
+          ${shot}
+          <h3>${it.name}</h3>
+          ${it.version ? `<div class="ver">v${it.version}</div>` : ""}
+          <div class="desc">${it.description || "No description."}</div>
+          <div class="meta">${human(it)}</div>
+          <a class="btn" href="${it.file}" download>⬇ Download</a>`;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterCards(){
+      const q = document.getElementById('search').value.toLowerCase().trim();
+      render(ALL.filter(it =>
+        (it.name + " " + (it.description||"")).toLowerCase().includes(q)));
+    }
+
+    fetch('software.json?_=' + Date.now())
+      .then(r => r.ok ? r.json() : [])
+      .then(data => {
+        ALL = Array.isArray(data) ? data : [];
+        document.getElementById('count').textContent = ALL.length;
+        render(ALL);
+      })
+      .catch(() => { ALL = []; render([]); });
+  </script>
+</body>
+</html>
