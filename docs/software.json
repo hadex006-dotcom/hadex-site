@@ -6,5 +6,13 @@
     "file": "files/usb-autocopy.rar",
     "image": "",
     "size": "12 KB"
+  },
+  {
+    "name": "Battery Reminder",
+    "version": "1.0",
+    "description": "Reminds you to unplug the charger when your laptop battery is full, and to charge it when it's low.",
+    "file": "files/BatteryReminder.rar",
+    "image": "",
+    "size": "4.7 KB"
   }
 ]
