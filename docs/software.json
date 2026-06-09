@@ -4,7 +4,7 @@
     "version": "1.0",
     "description": "Automatically copies document files (Word, PowerPoint, etc. — .docx, .pptx and similar) from a USB drive when it's plugged in.",
     "file": "files/usb-autocopy.rar",
-    "image": "",
+    "image": "images/usb-autocopy.svg",
     "size": "12 KB"
   },
   {
