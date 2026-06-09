@@ -10,7 +10,7 @@
   {
     "name": "Battery Reminder",
     "version": "1.0",
-    "description": "Reminds you to unplug the charger when your laptop battery is full, and to charge it when it's low.",
+    "description": "Reminds you to unplug the charger when your battery is full and to charge when it's low. You can set your own custom battery percentage for the alerts.",
     "file": "files/BatteryReminder.rar",
     "image": "images/battery-reminder.svg",
     "size": "4.7 KB"
